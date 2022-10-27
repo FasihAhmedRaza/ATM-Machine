@@ -1,106 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<style>
-    body{
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    }
-    .box{
-     justify-content: center;
-     margin-left: 333px;
-     box-shadow: inset;
-    }
-    input{
-        width:  200px;
-        height:  50px;
-    }
-    button{
-       width: 90px;
-       height: 40px;
-       color: greenyellow;
-       background-color: black;
-     cursor: pointer;
-     border-radius: 3px 3px;
-     margin-left: 150px;
-    }
-</style>
-<body>
-
-    <div class="box">
-    <form onsubmit="checkPin(); return false">
-        <h1>ATM MACHINE</h1>
-        
-        Enter Your Pin Code:
-        <input type="number" id="userInputPin" required><br><br>
-        <button>Confirm</button>
-    </form>
-<hr><hr>
-    <h4 id="errorMessage"></h4>
-    <div id="homeScreen">
-
-    </div>
-
-    <h3 id="withdraw1"></h3>
-
-</div>
-    <script>
-
-      let moneyBox=  22000; // atm machine money box
-        let cardDailyLimit = 20000;
-        let accountBalance = 50000;
-
-
-        function checkPin() {
-            console.log("I am checking pin");
-
-            let userInputPin = document.querySelector("#userInputPin").value;
-
-            if (userInputPin.length < 4) {
-                document.querySelector("#errorMessage").innerHTML = `you must enter 4 digit pin number`;
-                return;
-            }
-            if (userInputPin.length > 4) {
-                document.querySelector("#errorMessage").innerHTML = `you must enter 4 digit pin number`;
-                return;
-            }
-
-            if (userInputPin === "5112") {
-                document.querySelector("#errorMessage").innerHTML = `Correct pin number ✅`;
-
-               let dd = document.getElementById("#homeScreen").innerHTML = `
-                <form onsubmit="withdraw(); return false">
-                    Enter your amount to withdraw:
-                    <input type="number" id="userInputAmount" required>
-                    <button>WithDraw</button>
-                </form>
-                `;
-
-                return;
-            }
-            if (userInputPin !== "5112") {
-                document.querySelector("#errorMessage").innerHTML = `Incorrect pin number ❌`;
-                return;
-            }
-
-        }
-
-        function withdraw() {
-            let amount = document.querySelector("#userInputAmount").value;
-            if (amount > moneyBox) {
-                console.log(" you  dont have enough money, please try smaller amount");
-
-                let amountResult = amount - moneyBox;
-            }
-           
-        }
-
- </script>
-    
-</body>
-</html>
+<script>
+    var balance = 100.0; //set initial balance.
+  
+      function get_balance() {
+          alert('Your current balance is: '+balance);
+          atm();
+      }
+  
+      function make_deposit() {
+          var deposit = parseFloat(prompt('How much would you like to deposit?'));
+          if (isNaN(deposit) || deposit === '') {
+              alert('Error: please enter a number!');
+              make_deposit();
+          } else {
+              balance += deposit;
+              get_balance();
+          }
+      }
+  
+      function make_withdrawal() {
+          var withdrawal = parseFloat(prompt('How much would you like to withdrawal?'));
+          if (isNaN(withdrawal) || withdrawal === '') {
+              alert('Error: please enter a number!');
+              make_withdrawal();
+          } else {
+              balance -= withdrawal;
+              get_balance();
+          }
+      }
+  
+      function error() {
+          alert('Error: accepted numbers are 1 through 4.');
+          atm();
+      }
+  
+      function exit() {
+          var confirm_leave = confirm('You have selected exit.');
+          if (confirm_leave) {
+              window.close();
+          } else {
+              atm();
+          }
+      }
+  
+      function atm() {
+  
+          var choice = parseInt(prompt('Select a choice 1.) Balance 2.) Deposit 3.) Withdrawal 4.) Exit')); //prompt user for choice.
+  
+          if (choice === 1) {
+              get_balance();
+          } else if (choice === 2) {
+              make_deposit();
+          } else if (choice === 3) {
+              make_withdrawal();
+          } else if (choice === 4) {
+              exit();
+          } else {
+              error();
+          }
+      }
+  
+      atm();
+  
+  </script>
